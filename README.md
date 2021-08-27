@@ -1,5 +1,5 @@
-#Magento2_Refundid
-Refundid "Intant Refunds" module for Magento 2
+# Magento 2 Refundid
+Refundid's intant refund module for Magento 2
 
 note: this must be installed in conjunction with our Magento Integration - please contact us at info@refundid.com for more info on setup
 
