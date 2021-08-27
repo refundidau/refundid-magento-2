@@ -1,0 +1,21 @@
+{
+  "name": "refundid/creditmemo",
+  "license": "OSL-3.0",
+  "description": "Magento 2 Afterpay CreditMemo Module",
+  "type": "magento2-module",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "Refundid",
+      "homepage": "https://www.refundid.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Refundid\\CreditMemo\\": ""
+    },
+    "files": [
+      "registration.php"
+    ]
+  }
+}
