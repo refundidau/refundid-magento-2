@@ -11,7 +11,7 @@ Note: [MAGENTO] refers to the root folder where Magento is installed.
 
 - Download the Magento-Refundid plugin - Available as a .zip or tar.gz file from the Refundid GitHub directory. 
 - Unzip the file
-- Copy the *'Magento'* folder to: *[MAGENTO]/app/code/* 
+- Copy the contents of the unzipped folder to: *[MAGENTO]/app/code/Refundid/CreditMemo
 - Open Command Line Interface
 - In CLI, run the below command to enable Refundid module: *php bin/magento module:enable Refundid_CreditMemo*
 - In CLI, run the Magento setup upgrade: *php bin/magento setup:upgrade*
