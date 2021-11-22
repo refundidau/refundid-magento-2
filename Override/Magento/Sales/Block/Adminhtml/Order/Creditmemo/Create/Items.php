@@ -8,6 +8,7 @@
 namespace Refundid\CreditMemo\Override\Magento\Sales\Block\Adminhtml\Order\Creditmemo\Create;
 
 use Magento\Sales\Block\Adminhtml\Order\View\Tab\History;
+use Refundid\CreditMemo\Util\RefundidUtils;
 
 /**
  * Adminhtml credit memo items grid
@@ -49,7 +50,7 @@ class Items extends \Magento\Sales\Block\Adminhtml\Order\Creditmemo\Create\Items
             ['label' => __('Update Qty\'s'), 'class' => 'update-button', 'onclick' => $onclick]
         );
 
-        $showRefundidButton = $this->shouldShowRefundidButton($order);
+        $showRefundidButton = RefundidUtils::hasRefundidOrder($order);
 
         if ($this->getCreditmemo()->canRefund()) {
             if ($this->getCreditmemo()->getInvoice() && $this->getCreditmemo()->getInvoice()->getTransactionId()) {
@@ -101,83 +102,4 @@ class Items extends \Magento\Sales\Block\Adminhtml\Order\Creditmemo\Create\Items
         );
     }
 
-
-
-    public function shouldShowRefundidButton($order)
-    {
-
-        foreach ($order->getAllStatusHistory() as $orderComment) {
-            $history[] = ['date' => $orderComment->getCreatedAt(), 'comment' => $orderComment->getComment()];
-        }
-
-        foreach ($order->getCreditmemosCollection() as $_memo) {
-            foreach ($_memo->getCommentsCollection() as $_comment) {
-                $history[] = ['date' => $_comment->getCreatedAt(), 'comment' => $_comment->getComment()];
-            }
-        }
-        foreach ($order->getShipmentsCollection() as $_shipment) {
-            foreach ($_shipment->getCommentsCollection() as $_comment) {
-                $history[] = ['date' => $_comment->getCreatedAt(), 'comment' => $_comment->getComment()];
-            }
-        }
-        foreach ($order->getInvoiceCollection() as $_invoice) {
-            foreach ($_invoice->getCommentsCollection() as $_comment) {
-                $history[] = ['date' => $_comment->getCreatedAt(), 'comment' => $_comment->getComment()];
-            }
-        }
-
-        if (!isset($history)) return false;
-
-        $requested = [];
-        $approved = [];
-        $rejects = [];
-        $arrOrderstaus = [];
-        foreach ($history as $comment) {
-            if ($comment['comment']) {
-                if (preg_match('/\bRefundid approved by merchant\b/', $comment['comment'])) {
-
-                    preg_match_all('#\((.*?)\)#', $comment['comment'], $odermatch);
-
-                    if (isset($odermatch[1])) {
-                        foreach ($odermatch[1] as $oder) {
-                            $approvedId = explode("-", $oder);
-                            $approved[] = $approvedId[1];
-                        }
-                    }
-                }
-                if (preg_match('/\bThis order has been refunded by\b/', $comment['comment'])) {
-
-                    preg_match_all('#\((.*?)\)#', $comment['comment'], $refundmatch);
-
-                    if (isset($refundmatch[1])) {
-                        foreach ($refundmatch[1] as $refund) {
-                            $requestId = explode("-", $refund);
-                            $requested[] = $requestId[1];
-                        }
-                    }
-                }
-
-                if (preg_match('/\bRefundid rejected\b/', $comment['comment'])) {
-
-                    preg_match_all('#\((.*?)\)#', $comment['comment'], $rejectedmatch);
-
-                    if (isset($rejectedmatch[1])) {
-                        foreach ($rejectedmatch[1] as $refund) {
-                            $rejectId = explode("-", $refund);
-                            $rejects[] = $rejectId[1];
-                        }
-                    }
-                }
-            }
-        }
-
-        $arrOrderstaus = array_merge($approved, $rejects);
-
-        if (!isset($requested) && !isset($arrOrderstaus)) return false;
-
-        sort($requested);
-        sort($arrOrderstaus);
-        // Check for equality
-        return ($requested != $arrOrderstaus);
-    }
 }

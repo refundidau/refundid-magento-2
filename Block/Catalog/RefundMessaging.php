@@ -11,5 +11,5 @@ use Magento\Framework\View\Element\Template;
 
 
 class RefundMessaging extends Template {
-    public $isActive = False;
+    public $isActive = True;
 }
