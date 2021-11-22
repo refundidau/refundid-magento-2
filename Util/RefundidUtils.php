@@ -59,7 +59,6 @@ class RefundidUtils{
                     if (isset($refundmatch[1])) {
                         foreach ($refundmatch[1] as $refund) {
                             $requestId = explode("-", $refund);
-                            $requested[$requestId[1]] = True;
                             $requested[] = $requestId[1];
                         }
                     }
