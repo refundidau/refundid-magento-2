@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Refundid\CreditMemo\Override\Magento\Sales\Block\Adminhtml\Order\View\Tab;
+namespace Refundid\CreditMemo\Block\Adminhtml\Order\View\Tab;
 
 use Refundid\CreditMemo\Util\RefundidUtils;
 

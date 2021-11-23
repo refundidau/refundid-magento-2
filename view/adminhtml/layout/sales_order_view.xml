@@ -1,10 +1,14 @@
 <?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceBlock name="order_tab_info">
-            <action method="setTemplate">
-                <argument name="template" xsi:type="string">Refundid_CreditMemo::order_view_tab_info.phtml</argument>
-            </action>
-        </referenceBlock>
+        <referenceContainer name="payment_additional_info">
+            <block class="Refundid\CreditMemo\Block\Adminhtml\Order\View\Tab\Info" name="refundid_order_tab_info" template="Refundid_CreditMemo::order_view_tab_info.phtml" />
+        </referenceContainer>
     </body>
 </page>
